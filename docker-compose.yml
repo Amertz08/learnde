@@ -15,8 +15,8 @@ services:
       context: .
       dockerfile: Dockerfile.spark
     ports:
-      - "8081"
-      - "5000"
+      - "8081:8081"
+      - "5000:5000"
     command: runner worker master
   shell:
     build:
@@ -25,3 +25,9 @@ services:
     ports:
       - "4040:4040"
     command: runner shell master
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
