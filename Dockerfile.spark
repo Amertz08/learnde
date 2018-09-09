@@ -22,7 +22,6 @@ RUN tar xvf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 RUN mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /usr/local/
 RUN ln -s /usr/local/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /usr/local/spark
 
-RUN mkdir $LOG_DIR
 COPY runner.sh /usr/local/bin/runner
 RUN chmod +x /usr/local/bin/runner
 
