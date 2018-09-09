@@ -1,66 +1,14 @@
-DF_SPARK=Dockerfile.spark
-SPARK_IMG=spark
-DK=docker
-MASTER_HOST=master
-NET_NAME=spark-cluster
+DC=docker-compose
 
 build:
-	@$(DK) build \
-	-f $(DF_SPARK) \
-	-t $(SPARK_IMG) \
-	.
+	$(DC) pull
+	$(DC) build
 
-shell:
-	@$(DK) run \
-	--rm \
-	-it \
-	-p 4040:4040 \
-	--network=$(NET_NAME) \
-	$(SPARK_IMG) \
-	runner \
-	shell \
-	$(MASTER_HOST)
+up:
+	$(DC) up
 
-master:
-	@$(DK) run \
-	--rm \
-	-it \
-	-d \
-	-p 8080:8080 \
-	-p 7077:7077 \
-	-p 6066:6066 \
-	--name master \
-	--network=$(NET_NAME) \
-	--hostname $(MASTER_HOST) \
-	$(SPARK_IMG) \
-	runner \
-	master
+upd:
+	$(DC) up -d
 
-worker:
-	@$(DK) run \
-	--rm \
-	-it \
-	-d \
-	-p 8081 \
-	-p 5000 \
-	--network=$(NET_NAME) \
-	$(SPARK_IMG) \
-	runner \
-	worker \
-	$(MASTER_HOST)
-
-bash:
-	@$(DK) run \
-	--rm \
-	-it \
-	-p 8080 \
-	-p 8081 \
-	-p 7077 \
-	-p 6066 \
-	-p 4040 \
-	-p 5000 \
-	$(SPARK_IMG) \
-	bash
-
-network:
-	@$(DK) network create $(NET_NAME)
+down:
+	$(DC) down
