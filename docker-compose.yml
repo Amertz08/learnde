@@ -1,0 +1,27 @@
+version: "3.2"
+
+services:
+  master:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "6066:6066"
+    command: runner master
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    ports:
+      - "8081"
+      - "5000"
+    command: runner worker master
+  shell:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    ports:
+      - "4040:4040"
+    command: runner shell master
